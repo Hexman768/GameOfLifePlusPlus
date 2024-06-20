@@ -12,63 +12,52 @@ Board::Board(const int rows, const int cols) {
 		}
 		matrix.push_back(row);
 	}
-
-	// TODO: Remove the following preset stuff
-	//matrix[0][1] = Cell(true);
-	//matrix[1][1] = Cell(true);
-	//matrix[2][1] = Cell(true);
 }
 
 void Board::drawBoard() {
 	std::string consoleStr = "";
 	for (int i = 0; i < _rows; i++) {
+		if (i == 0) {
+			consoleStr += "+";
+			for (int k = 0; k < _cols + 2; k++) { consoleStr += "-"; }
+			consoleStr += "+\n";
+		}
 		for (int j = 0; j < _cols; j++) {
+			if (j == 0) { consoleStr += "| "; }
 			if (matrix[i][j].getState()) {
 				consoleStr += "#";
 			}
 			else {
-				consoleStr += ".";
+				consoleStr += " ";
 			}
 		}
-		consoleStr += "\n";
+		consoleStr += " |\n";
 	}
-	std::cout << consoleStr << "\n";
+	consoleStr += "+";
+	for (int i = 0; i < _cols + 2; i++) {
+		consoleStr += "-";
+	}
+	std::cout << consoleStr << "+\n";
 }
 
 int Board::getNeighbors(const int x, const int y) {
 	int nbrs = 0;
 	// check top left
-	if (x > 0 && y > 0) {
-		nbrs += matrix[y - 1][x - 1].getIntState();
-	}
+	if (x > 0 && y > 0) { nbrs += matrix[y - 1][x - 1].getIntState(); }
 	// check top
-	if (y > 0) {
-		nbrs += matrix[y - 1][x].getIntState();
-	}
+	if (y > 0) { nbrs += matrix[y - 1][x].getIntState(); }
 	// check top right
-	if (x < (_cols - 1) && y > 0) {
-		nbrs += matrix[y - 1][x + 1].getIntState();
-	}
+	if (x < (_cols - 1) && y > 0) { nbrs += matrix[y - 1][x + 1].getIntState(); }
 	// check left
-	if (x > 0) {
-		nbrs += matrix[y][x - 1].getIntState();
-	}
+	if (x > 0) { nbrs += matrix[y][x - 1].getIntState(); }
 	// check right
-	if (x < _cols - 1) {
-		nbrs += matrix[y][x + 1].getIntState();
-	}
+	if (x < _cols - 1) { nbrs += matrix[y][x + 1].getIntState(); }
 	// check bottom left
-	if (x > 0 && y < _rows - 1) {
-		nbrs += matrix[y + 1][x - 1].getIntState();
-	}
+	if (x > 0 && y < _rows - 1) { nbrs += matrix[y + 1][x - 1].getIntState(); }
 	// check bottom
-	if (y < _rows - 1) {
-		nbrs += matrix[y + 1][x].getIntState();
-	}
+	if (y < _rows - 1) { nbrs += matrix[y + 1][x].getIntState(); }
 	// check bottom right
-	if (x < _cols - 1 && y < _rows - 1) {
-		nbrs += matrix[y + 1][x + 1].getIntState();
-	}
+	if (x < _cols - 1 && y < _rows - 1) { nbrs += matrix[y + 1][x + 1].getIntState(); }
 	return nbrs;
 }
 
