@@ -17,7 +17,6 @@ public:
 	void calcNextGeneration();
 	void generateRandomMatrix();
 	int getNeighbors(const int x, const int y);
-	//int getNeighbors(Cell cell);
 };
 
 #endif
