@@ -4,7 +4,11 @@
 
 class Cell {
 public:
+	int x_ = 0;
+	int y_ = 0;
+
 	Cell(bool state);
+	Cell(bool state, const int x, const int y);
 	bool getState();
 	int getIntState();
 	void setState(bool state);

@@ -1,17 +1,49 @@
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "Board.h"
+
+std::vector<std::vector<Cell>> constructBoard(const int rows, const int cols, std::vector<Cell> vLiveCells) {
+	std::vector<std::vector<Cell>> vGameBoard;
+	for (int i = 0; i < rows; i++) {
+		std::vector<Cell> row;
+		for (int j = 0; j < cols; j++) {
+			row.push_back(Cell(false, j, i));
+		}
+		vGameBoard.push_back(row);
+	}
+	for (const auto cell : vLiveCells) {
+		vGameBoard[cell.y_][cell.x_] = cell;
+	}
+	return vGameBoard;
+}
+
+Board::Board() {
+	_rows = 20;
+	_cols = 20;
+	std::vector<Cell> vCells;
+	matrix = constructBoard(_rows, _cols, vCells);
+}
+
+Board::Board(std::vector<Cell> vLiveCells) {
+	_rows = 20;
+	_cols = 20;
+	vLiveCells_ = vLiveCells;
+	matrix = constructBoard(_rows, _cols, vLiveCells_);
+}
 
 Board::Board(const int rows, const int cols) {
 	_rows = rows;
 	_cols = cols;
-	for (int i = 0; i < _rows; i++) {
-		std::vector<Cell> row;
-		for (int j = 0; j < _cols; j++) {
-			row.push_back(Cell(false));
-		}
-		matrix.push_back(row);
-	}
+	std::vector<Cell> vCells;
+	matrix = constructBoard(_rows, _cols, vCells);
+}
+
+Board::Board(const int rows, const int cols, std::vector<Cell> liveCells) {
+	_rows = rows;
+	_cols = cols;
+	vLiveCells_ = liveCells;
+	matrix = constructBoard(_rows, _cols, vLiveCells_);
 }
 
 void Board::drawBoard() {
@@ -88,6 +120,7 @@ void Board::calcNextGeneration() {
 }
 
 void Board::generateRandomMatrix() {
+	srand(time(NULL));
 	for (int i = 0; i < _rows; i++) {
 		for (int j = 0; j < _cols; j++) {
 			// create random number between one and zero.
